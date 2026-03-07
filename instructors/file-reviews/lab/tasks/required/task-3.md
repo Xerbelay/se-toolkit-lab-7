@@ -1,11 +1,9 @@
 # Review: `lab/tasks/required/task-3.md`
 
-**Date:** 2026-03-06
-
-**Convention files used:**
-
-- `instructors/context/conventions/tasks.md` — task structure, design principles, conceptual review dimensions (D1–D12)
-- `instructors/context/conventions/common.md` — writing conventions (4.1–4.26)
+- **Date:** 2026-03-07
+- **Convention files used:**
+  - `instructors/context/conventions/tasks.md` — task structure, design principles, conceptual review dimensions (D1–D12)
+  - `instructors/context/conventions/common.md` — writing conventions (4.1–4.26)
 
 ---
 
@@ -13,13 +11,13 @@
 
 ### D1. Learning objective clarity
 
-1. **[Low]** Line 9 (Purpose). The Purpose contains two objectives joined with "and": "Add charts to the front-end to visualize the analytics data from Task 2, **and** learn to integrate a chart library into a React application." A single, concrete learning outcome is preferred.
+1. **[Low]** Line 9 (Purpose): The Purpose contains two objectives joined with "and": "Add charts to the front-end to visualize the analytics data from Task 2, **and** learn to integrate a chart library into a React application." A single, concrete learning outcome is preferred.
    - **Suggested fix:** Pick one outcome, e.g., "Learn to integrate a chart library into a React application to visualize analytics data."
 
 ### D2. Step-by-step completeness
 
-1. **[Medium]** Lines 114–120 (step 1.5). The step says "Update `frontend/src/App.tsx` to include navigation" but provides only vague bullet-point suggestions, not concrete step-by-step instructions. A beginner may not know how to implement this without AI assistance.
-   - **Suggested fix:** Provide a concrete code snippet or placeholder template showing the state variable, the navigation buttons, and the conditional rendering. Alternatively, give an exact AI prompt as done in step 1.4.
+1. **[Medium]** Lines 114–122 (step 1.5): The step says "Update `frontend/src/App.tsx` to include navigation" but provides only vague bullet-point suggestions, not concrete step-by-step instructions. A beginner may not know how to implement this without AI assistance.
+   - **Suggested fix:** Provide a concrete code snippet or placeholder template showing the state variable, navigation buttons, and conditional rendering. Alternatively, give an exact AI prompt as done in step 1.4.
 
 ### D3. Student navigation
 
@@ -27,14 +25,17 @@ No issues found.
 
 ### D4. Checkpoints and feedback loops
 
-1. **[Medium]** Lines 44–66 (step 1.3). No checkpoint after installing the chart library. Students have no way to verify the install succeeded.
-   - **Suggested fix:** Add expected output after `npm install` (e.g., "You should see `added N packages`") or a verification command like `npm ls chart.js`.
+1. **[Medium]** Step 1.3 (lines 44–68): No checkpoint after installing the chart library. Students have no way to verify the install succeeded.
+   - **Suggested fix:** Add expected output after `npm install` (e.g., "You should see output similar to: `added N packages`") or a verification command like `npm ls chart.js`.
 
-2. **[Medium]** Lines 112–120 (step 1.5). No checkpoint after adding navigation. Students don't verify that the navigation works until step 1.7.
-   - **Suggested fix:** Add a brief checkpoint such as "Save the file. You will verify navigation works in step 1.7."
+2. **[Medium]** Step 1.5 (lines 114–122): No checkpoint after adding navigation. Students don't verify that navigation works until step 1.7, two steps later. A silent mistake here propagates.
+   - **Suggested fix:** Add a brief checkpoint such as "You will verify navigation works in step 1.7" or provide an intermediate checkpoint.
 
-3. **[Low]** Lines 139–141 (step 1.6, sub-step 2). No expected output shown for a successful `npm run typecheck`. Students don't know what "passing" looks like.
-   - **Suggested fix:** Show expected output, e.g., a clean exit with no errors.
+3. **[Low]** Step 1.6 (lines 137–143): No expected output shown for a successful `npm run typecheck`. Students unfamiliar with `TypeScript` may not know what "passing" looks like.
+   - **Suggested fix:** After step 2, add: "If there are no type errors, the command produces no output and exits silently."
+
+4. **[Medium]** Step 1.9, line 248 (item 6): "Verify the Dashboard page shows charts" is a checkpoint worded as a numbered step. Per convention 4.18, checkpoints should be indented under the action step they verify, not numbered as separate steps.
+   - **Suggested fix:** Replace step 6 with a navigation action ("Navigate to the Dashboard page") and indent the verification text beneath it — matching the pattern used in step 1.7 (lines 189–191).
 
 ### D5. Acceptance criteria alignment
 
@@ -46,13 +47,13 @@ No issues found.
 
 ### D7. Practical usability
 
-1. **[Medium]** Lines 117–120 (step 1.5). The manual approach provides only vague bullet points ("Add a state variable", "Add buttons or links", "Render the Items table or the Dashboard component"). A beginner without AI assistance would struggle to implement this.
-   - **Suggested fix:** Provide a concrete code snippet or a placeholder template for `App.tsx` with the navigation logic, similar to the TIP in step 1.4.
+1. **[Medium]** Lines 118–122 (step 1.5): The manual approach provides only vague bullet points ("Add a state variable", "Add buttons or links", "Render the Items table or the Dashboard component"). A beginner without AI assistance would struggle to implement this.
+   - **Suggested fix:** Provide a concrete code snippet or placeholder template for `App.tsx` with the navigation logic, similar to the TIP in step 1.4.
 
 ### D8. LLM-independence
 
-1. **[Medium]** Lines 100–110 (step 1.4 TIP). The manual fallback only shows the minimal `Chart.js` registration and a one-line rendering instruction. It does not cover fetching data from the API, building the `chartData` object, or handling loading/error states — all of which are required by the acceptance criteria. A student who doesn't use AI has no complete path to finish the component.
-   - **Suggested fix:** Expand the TIP with a more complete code template, or add a placeholder file in the seed project that students can fill in.
+1. **[Medium]** Step 1.4 (lines 70–112): The step's numbered instructions (1–3) are structured entirely around AI agent use ("Open the coding agent", "Give it a prompt", "Review the generated code"). The manual fallback (TIP at lines 102–112) provides only a minimal `Chart.js` registration snippet — it does not cover fetching data from the API, building the `chartData` object, or handling loading/error states, all of which are required by the acceptance criteria. A student who does not use an AI has no complete path to finish the component.
+   - **Suggested fix:** Either explicitly label step 1.4 as AI-required (per convention 4.16: "When a task explicitly requires AI use, mark it as a separate, clearly labeled part") or expand the TIP into a complete non-AI implementation path, or restructure the step to use Method 1 / Method 2 format.
 
 ### D9. Git workflow coherence
 
@@ -64,8 +65,11 @@ No issues found.
 
 ### D11. Controlled AI steps
 
-1. **[Low]** Line 80 (step 1.4, sub-step 2). The prompt is introduced with "Give it a prompt **like**:", making it a suggestion rather than an exact prompt. Per convention 4.20 (Controlled task environment), the prompt should be exact or templated with `<placeholders>` so the AI interaction is reproducible.
-   - **Suggested fix:** Change "Give it a prompt like:" to "Give it this prompt:" or "Use this prompt:" to make it exact.
+1. **[Low]** Line 82 (step 1.4, item 2): The prompt is introduced with "Give it a prompt **like**:", making it a suggestion rather than an exact prompt. Per convention 4.20 (Controlled task environment), the prompt should be exact or templated with `<placeholders>` so the AI interaction is reproducible.
+   - **Suggested fix:** Change "Give it a prompt like:" to "Give it this prompt:" or "Use this prompt:".
+
+2. **[Low]** Line 85: The AI prompt uses the `<lab-id>` placeholder, but it is not linked to a wiki section or defined inline per convention 4.20. Line 92 provides informal guidance ("Use a default such as `lab-04`…") but does not formally explain where students find valid lab IDs.
+   - **Suggested fix:** Link `<lab-id>` to a wiki section that explains how to find valid lab IDs, or define it inline with the `(without < and >)` clarification.
 
 ### D12. Autochecker verifiability
 
@@ -75,17 +79,17 @@ No issues found.
 
 ## Convention findings
 
+### Task document template (tasks.md Section 1)
+
+1. **Lines 11–18:** Missing `<h4>Diagram</h4>` section between Context and Table of contents. The task involves actions across three environments (local development, VM deployment, GitHub PR), which requires a Mermaid sequence diagram per convention (tasks.md 1.1, line 129: "Diagram is required whenever the task involves actions across multiple actors or environments").
+
 ### 4.1. Instructions wording
 
-1. ~~**Line 215:** Compound instruction — "pull your branch and restart the services" joins two distinct actions with "and". Should be split or use "Complete these steps:".~~
-2. ~~**Line 229:** Compound instruction — "Connect with your API key and verify the Dashboard page shows charts" joins two actions with "and". Should be two separate steps.~~
+No issues found.
 
 ### 4.2. Terminal commands
 
-1. ~~**Lines 62–66:** Terminal command `cd ..` missing the "To..." intention pattern and the `[run in the `VS Code Terminal`]` wiki link. Currently reads "Go back to the project root:".~~
-2. ~~**Lines 153–157:** Same violation as above — `cd ..` without "To..." pattern or wiki link.~~
-3. ~~**Lines 205–209:** Terminal command `git push -u origin <task-branch>` missing the "To..." intention pattern and wiki link. Currently reads "Push your task branch:".~~
-4. ~~**Lines 215–221:** Three separate commands (`cd`, `git fetch && checkout && pull`, `docker compose up`) in a single code block, all missing the "To..." intention pattern and wiki link. Each command should have its own "To..." block.~~
+No issues found.
 
 ### 4.3. Command Palette commands
 
@@ -97,7 +101,7 @@ No issues found.
 
 ### 4.5. Ordered lists
 
-No issues found.
+1. **Lines 120–122:** Sequential implementation steps ("Add a state variable…", "Add buttons…", "Render the Items table…") use a bullet list (`-`) instead of a numbered list (`1. 2. 3.`). These are sequential actions that build on each other and should be numbered per convention 4.5.
 
 ### 4.6. Mini-ToC
 
@@ -109,12 +113,13 @@ No issues found.
 
 ### 4.8. Links and cross-references
 
-1. **Line 38:** Links to `../../../wiki/git-workflow.md` without a section anchor. Convention says "Don't link to the top-level heading of a file. Link to a specific subsection instead." (Note: the task template in `tasks.md` section 1 uses this same pattern, so the template itself may need updating.)
+1. **Line 38:** Links to `../../../wiki/git-workflow.md` without a section anchor. Convention 4.8 says "Don't link to the top-level heading of a file. Link to a specific subsection instead." Linking without an anchor is equivalent to linking to the top-level heading. (Note: the task template in `tasks.md` Section 1 uses this same pattern, so the template itself may need updating.)
 
 ### 4.9. Notes, tips, warnings
 
-1. ~~**Lines 149–151:** `> [!TIP]` alert is indented inside list item 3 (step 1.6). Convention states "Do not indent alerts. GitHub-flavored Markdown alerts do not render correctly when indented (e.g., inside a list item)."~~
-2. ~~**Lines 191–193:** `> [!NOTE]` alert is indented inside list item 6 (step 1.7). Same violation.~~
+1. **Line 151:** Uses `**Tip:**` in plain text inside a numbered list. Per convention 4.9, alerts inside lists must use the fallback blockquote format with emoji and bold label (e.g., `> 🟩 **Tip**`).
+
+2. **Line 193:** Uses `**Note:**` in plain text inside a numbered list. Per convention 4.9, alerts inside lists must use the fallback blockquote format with emoji and bold label (e.g., `> 🟦 **Note**`).
 
 ### 4.10. Images
 
@@ -130,7 +135,7 @@ No issues found.
 
 ### 4.13. Diagrams
 
-Not applicable.
+Covered under "Task document template" above (missing `<h4>Diagram</h4>` section).
 
 ### 4.14. `<!-- TODO -->` comments
 
@@ -150,16 +155,15 @@ Not applicable.
 
 ### 4.18. Inline formatting of technical terms
 
-1. ~~**Line 9:** `React` is not backticked. Should be `` `React` ``.~~
-2. ~~**Line 98:** `TypeScript` is not backticked. Should be `` `TypeScript` ``.~~
+No issues found.
 
 ### 4.19. Steps with sub-steps
 
-No issues found.
+1. **Lines 118–122:** "A simple approach:" followed by bullet items describes sequential implementation steps but lacks the proper transition phrase ("Complete these steps:" for student actions or "does the following:" for artifact behavior) per convention 4.19.
 
 ### 4.20. Placeholders in docs
 
-No issues found.
+1. **Line 85:** `<lab-id>` placeholder used in the AI prompt without a linked explanation or inline definition. Per convention 4.20, placeholders should link to an explanation section or include inline clarification.
 
 ### 4.21. `docker compose up` commands
 
@@ -167,8 +171,7 @@ No issues found.
 
 ### 4.22. Environment variable references
 
-1. ~~**Line 175:** `CADDY_PORT` in `.env.docker.secret` is referenced in prose but neither the variable nor the file is linked to its wiki section. Should use the format: `` [`CADDY_PORT`](../../../wiki/dotenv-docker-secret.md#caddy_port) in [`.env.docker.secret`](../../../wiki/dotenv-docker-secret.md#what-is-envdockersecret) ``.~~
-2. ~~**Line 227:** Same violation — `CADDY_PORT` in `.env.docker.secret` not linked.~~
+No issues found.
 
 ### 4.23. Horizontal rules
 
@@ -185,6 +188,10 @@ Not applicable.
 ### 4.26. Example IP address
 
 Not applicable (uses `<your-vm-ip-address>` placeholder, not a hardcoded example).
+
+### Step checkpoints (tasks.md 4.18)
+
+1. **Line 248 (step 1.9, item 6):** "Verify the Dashboard page shows charts" is a checkpoint worded as a numbered step. Checkpoints must be indented under the action step they verify, not numbered as separate steps.
 
 ---
 
@@ -205,11 +212,11 @@ No empty sections found.
 | Category                      | Count |
 |-------------------------------|-------|
 | Conceptual — High             | 0     |
-| Conceptual — Medium           | 5     |
-| Conceptual — Low              | 3     |
-| Convention violations         | 13    |
+| Conceptual — Medium           | 6     |
+| Conceptual — Low              | 4     |
+| Convention violations         | 8     |
 | TODOs                         | 0     |
 | Empty sections                | 0     |
-| **Total**                     | **21**|
+| **Total**                     | **18**|
 
-**Overall assessment:** The task follows the template structure correctly and covers a coherent learning objective. The main issues are: (1) several terminal commands lack the required "To..." intention pattern and wiki link (4 instances), (2) two indented alerts that won't render correctly on GitHub, (3) step 1.5 (Add navigation) is underspecified for students who don't use AI, and (4) the manual fallback in step 1.4 is too minimal to satisfy LLM-independence. The compound instructions at lines 215 and 229 should be split per convention 4.1.
+**Overall assessment:** The task follows the template structure correctly and covers a coherent learning objective. The main issues are: (1) a missing `<h4>Diagram</h4>` section for a multi-environment task, (2) two inline notes/tips that use plain bold text instead of the fallback blockquote alert format inside lists, (3) missing checkpoints for steps 1.3, 1.5, and 1.6, plus a checkpoint disguised as a numbered step in step 1.9, (4) step 1.5 (Add navigation) is underspecified for students who don't use AI, and (5) the manual fallback in step 1.4's TIP is too minimal to satisfy LLM-independence. No TODOs or empty sections were found.
