@@ -87,7 +87,7 @@ Create the agent environment file:
 cp .env.agent.example .env.agent.secret
 ```
 
-Edit `.env.agent.secret` and fill in `LLM_API_KEY`, `LLM_API_BASE`, and `LLM_MODEL`. Your agent reads from this file.
+Edit `.env.agent.secret` and fill in `LLM_API_KEY`, `LLM_API_BASE_URL`, and `LLM_MODEL`. Your agent reads from this file.
 
 > **Note:** This is **not** the same as `LMS_API_KEY` in `.env.docker.secret`. That one protects your backend LMS endpoints. `LLM_API_KEY` authenticates with your LLM provider.
 

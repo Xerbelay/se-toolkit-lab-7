@@ -65,7 +65,7 @@ Your agent must read all configuration from **environment variables**, not hardc
 | Variable             | Purpose                                                      | Source                          |
 | -------------------- | ------------------------------------------------------------ | ------------------------------- |
 | `LLM_API_KEY`        | LLM provider API key                                         | `.env.agent.secret`             |
-| `LLM_API_BASE`       | LLM API endpoint URL                                         | `.env.agent.secret`             |
+| `LLM_API_BASE_URL`       | LLM API endpoint URL                                         | `.env.agent.secret`             |
 | `LLM_MODEL`          | Model name                                                   | `.env.agent.secret`             |
 | `LMS_API_KEY`        | Backend API key for `query_api` auth                         | `.env.docker.secret`            |
 | `AGENT_API_BASE_URL` | Base URL for `query_api` (default: `http://localhost:42002`) | Optional, defaults to localhost |
@@ -169,7 +169,7 @@ Add 2 regression tests for system agent tools. Example questions:
 - [ ] `plans/task-3.md` exists with the implementation plan and benchmark diagnosis.
 - [ ] `agent.py` defines `query_api` as a function-calling schema.
 - [ ] `query_api` authenticates with `LMS_API_KEY` from environment variables.
-- [ ] The agent reads all LLM config (`LLM_API_KEY`, `LLM_API_BASE`, `LLM_MODEL`) from environment variables.
+- [ ] The agent reads all LLM config (`LLM_API_KEY`, `LLM_API_BASE_URL`, `LLM_MODEL`) from environment variables.
 - [ ] The agent reads `AGENT_API_BASE_URL` from environment variables (defaults to `http://localhost:42002`).
 - [ ] The agent answers static system questions correctly (framework, ports, status codes).
 - [ ] The agent answers data-dependent questions with plausible values.
