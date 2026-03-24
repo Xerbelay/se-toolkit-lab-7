@@ -9,7 +9,7 @@ services:
     networks:
       - lms-network
     ports:
-      - ${BACKEND_HOST_ADDRESS:?'BACKEND_HOST_ADDRESS is required'}:${BACKEND_HOST_PORT:?'BACKEND_HOST_PORT is required'}
+      - ${BACKEND_HOST_ADDRESS:?'BACKEND_HOST_ADDRESS is required'}:${BACKEND_HOST_PORT:?'BACKEND_HOST_PORT is required'}:${BACKEND_CONTAINER_PORT:?'BACKEND_CONTAINER_PORT is required'}
     expose:
       - ${BACKEND_CONTAINER_PORT}
     environment:
@@ -63,7 +63,7 @@ services:
       - POSTGRES_USER=${POSTGRES_USER:?'POSTGRES_USER is required'}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:?'POSTGRES_PASSWORD is required'}
     ports:
-      - ${POSTGRES_HOST_ADDRESS:?'POSTGRES_HOST_ADDRESS is required'}:${POSTGRES_HOST_PORT:?'POSTGRES_HOST_PORT is required'}
+      - ${POSTGRES_HOST_ADDRESS:?'POSTGRES_HOST_ADDRESS is required'}:${POSTGRES_HOST_PORT:?'POSTGRES_HOST_PORT is required'}:${CONST_POSTGRESQL_DEFAULT_PORT:?'CONST_POSTGRESQL_DEFAULT_PORT is required'}
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./backend/app/data/init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -87,7 +87,7 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD:?'PGADMIN_PASSWORD is required'}
       - SCRIPT_NAME=/utils/pgadmin
     ports:
-      - ${PGADMIN_HOST_ADDRESS:?'PGADMIN_HOST_ADDRESS is required'}:${PGADMIN_HOST_PORT:?'PGADMIN_HOST_PORT is required'}
+      - ${PGADMIN_HOST_ADDRESS:?'PGADMIN_HOST_ADDRESS is required'}:${PGADMIN_HOST_PORT:?'PGADMIN_HOST_PORT is required'}:80
     depends_on:
       postgres:
         condition: service_healthy
@@ -106,7 +106,7 @@ services:
       - BACKEND_CONTAINER_PORT=${BACKEND_CONTAINER_PORT:?'BACKEND_CONTAINER_PORT is required'}
       - QWEN_CODE_API_URL=${QWEN_CODE_API_URL:?'QWEN_CODE_API_URL is required'}
     ports:
-      - ${LMS_API_HOST_ADDRESS:?'LMS_API_HOST_ADDRESS is required'}:${LMS_API_HOST_PORT:?'LMS_API_HOST_PORT is required'}
+      - ${LMS_API_HOST_ADDRESS:?'LMS_API_HOST_ADDRESS is required'}:${LMS_API_HOST_PORT:?'LMS_API_HOST_PORT is required'}:${CADDY_CONTAINER_PORT:?'CADDY_CONTAINER_PORT is required'}
     volumes:
       - ./caddy/Caddyfile:/etc/caddy/Caddyfile
 
