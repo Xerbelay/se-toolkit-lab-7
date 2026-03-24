@@ -95,3 +95,24 @@ By the end of this lab, you should be able to say:
 ### Optional
 
 1. [Flutter Web Chatbot](./lab/tasks/optional/task-1.md)
+## Deploy
+
+This project can be deployed on the VM with Docker Compose.
+
+### Required environment variables
+
+Create and fill `.env.docker.secret` with the required values, including:
+
+- `BOT_TOKEN`
+- `LMS_API_KEY`
+- `LLM_API_KEY`
+- `LLM_API_MODEL`
+
+The bot service connects to the backend through the Docker network using `http://backend:8000`.
+
+The bot connects to the LLM proxy using `http://host.docker.internal:42005/v1`.
+
+### Start services
+
+```bash
+docker compose --env-file .env.docker.secret up --build -d
