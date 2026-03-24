@@ -8,8 +8,6 @@ from config import get_settings
 
 
 class BackendError(Exception):
-    """User-friendly backend communication error."""
-
     pass
 
 
@@ -17,7 +15,7 @@ class BackendError(Exception):
 class LMSClient:
     base_url: str
     api_key: str
-    timeout: float = 10.0
+    timeout: float = 15.0
 
     @property
     def headers(self) -> dict[str, str]:
@@ -32,13 +30,10 @@ class LMSClient:
 
         if status == 502:
             return "Backend error: HTTP 502 Bad Gateway. The backend service may be down."
-
         if status == 401:
             return "Backend error: HTTP 401 Unauthorized. Check LMS_API_KEY."
-
         if status == 403:
             return "Backend error: HTTP 403 Forbidden. Access was denied by the backend."
-
         if status == 404:
             return "Backend error: HTTP 404 Not Found. Check the backend URL."
 
@@ -69,6 +64,17 @@ class LMSClient:
                 if response.status_code >= 400:
                     raise BackendError(self._format_http_error(response))
                 return response.json()
+        except httpx.RequestError as exc:
+            raise BackendError(self._format_request_error(exc)) from exc
+
+    def post_json(self, path: str, payload: dict | None = None):
+        url = f"{self.base_url.rstrip('/')}/{path.lstrip('/')}"
+        try:
+            with httpx.Client(timeout=self.timeout) as client:
+                response = client.post(url, headers=self.headers, json=payload or {})
+                if response.status_code >= 400:
+                    raise BackendError(self._format_http_error(response))
+                return response.json() if response.content else {"status": "ok"}
         except httpx.RequestError as exc:
             raise BackendError(self._format_request_error(exc)) from exc
 

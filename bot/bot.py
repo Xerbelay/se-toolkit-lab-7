@@ -1,9 +1,9 @@
 import argparse
 import asyncio
 
-from aiogram import Bot, Dispatcher
+from aiogram import Bot, Dispatcher, F
 from aiogram.filters import Command
-from aiogram.types import Message
+from aiogram.types import CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup, Message
 
 from config import get_settings
 from handlers.commands import (
@@ -14,6 +14,28 @@ from handlers.commands import (
     handle_start,
     handle_unknown,
 )
+from services.intent_router import route_natural_language
+
+
+def get_start_keyboard() -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(text="Labs", callback_data="ask:what labs are available?"),
+                InlineKeyboardButton(text="Health", callback_data="cmd:/health"),
+            ],
+            [
+                InlineKeyboardButton(
+                    text="Lowest pass rate",
+                    callback_data="ask:which lab has the lowest pass rate?",
+                ),
+                InlineKeyboardButton(
+                    text="Top learners",
+                    callback_data="ask:who are the top 5 students in lab 4?",
+                ),
+            ],
+        ]
+    )
 
 
 def route_input(user_input: str) -> str:
@@ -37,7 +59,10 @@ def route_input(user_input: str) -> str:
             return "Usage: /scores <lab-id>"
         return handle_scores(parts[1])
 
-    return handle_unknown(text)
+    if text.startswith("/"):
+        return handle_unknown(text)
+
+    return route_natural_language(text)
 
 
 async def run_telegram_bot() -> None:
@@ -51,7 +76,7 @@ async def run_telegram_bot() -> None:
 
     @dp.message(Command("start"))
     async def start_command(message: Message) -> None:
-        await message.answer(handle_start())
+        await message.answer(handle_start(), reply_markup=get_start_keyboard())
 
     @dp.message(Command("help"))
     async def help_command(message: Message) -> None:
@@ -73,10 +98,22 @@ async def run_telegram_bot() -> None:
             return
         await message.answer(handle_scores(parts[1]))
 
+    @dp.callback_query(F.data.startswith("cmd:"))
+    async def command_callback(callback: CallbackQuery) -> None:
+        payload = callback.data.removeprefix("cmd:")
+        await callback.message.answer(route_input(payload))
+        await callback.answer()
+
+    @dp.callback_query(F.data.startswith("ask:"))
+    async def ask_callback(callback: CallbackQuery) -> None:
+        payload = callback.data.removeprefix("ask:")
+        await callback.message.answer(route_input(payload))
+        await callback.answer()
+
     @dp.message()
-    async def fallback_command(message: Message) -> None:
-        text = message.text or ""
-        await message.answer(handle_unknown(text))
+    async def fallback_message(message: Message) -> None:
+        text = (message.text or "").strip()
+        await message.answer(route_input(text))
 
     await dp.start_polling(bot)
 
